@@ -1,16 +1,16 @@
 const path = require('path')
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/index.js',
     module: {
-        rules: [{
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/,
-        }, ],
+        rules: [ {
+            test: /\.vue$/,
+            use: 'vue-loader'
+          }]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.vue','.js'],
         alias: {
             'vue': '@vue/runtime-dom'
         }
@@ -22,10 +22,13 @@ module.exports = {
     },
     devServer: {
         inline: true,
-        // hot: true,
+        hot: true,
         stats: 'minimal',
         contentBase: __dirname,
         overlay: true
-    }
+    },
+    plugins: [
+        new VueLoaderPlugin()
+      ],
 
 }
