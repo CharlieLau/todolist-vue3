@@ -11,7 +11,7 @@ let beforeEditCache
 
 
 const state = reactive({
-    todos: [],
+    todos: todoStorage.fetch(),
     visibility: 'all',
     editedTodo: null,
     newTodo: ''
@@ -38,17 +38,19 @@ export function onTodosMounted() {
     watch(
         effect(() => {
             todoStorage.save(state.todos)
-        })
+        }),
+        {
+            deep:true
+        }
     )
 }
 
 export function useState() {
-    state.todos = todoStorage.fetch()
     return state
 }
 
-export function addTodo(todo) {
-    const value = todo.trim()
+export function addTodo() {
+    const value = state.newTodo.trim()
     if (!value) {
         return
     }
