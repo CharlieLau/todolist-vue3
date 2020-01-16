@@ -1,5 +1,5 @@
 <template>
-     <section class="main" v-show="todos.length">
+     <section class="main" v-show="state.todos.length">
         <input id="toggle-all" class="toggle-all" type="checkbox" v-model="allDone">
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list">
@@ -15,73 +15,16 @@
     </section>
 </template>
 <script>
-  import { useTodos, onTodosMounted, filters } from "./todo";
+  import {  onTodosMounted, useCompouteds, useState,handleEditTodo,removeTodo,cancelEdit,doneEdit } from "./todo";
   import { onMounted, computed, reactive } from "vue";
   export default {
     setup() {
-      const { todos } = useTodos();
-      let beforeEditCache;
-      const state = reactive({
-        editedTodo: null,
-        visibility: "all"
-      });
-
+      const state = useState();
       onMounted(onTodosMounted);
 
-      const filteredTodos = computed(() => {
-        return filters[state.visibility](todos);
-      });
-      const remaining = computed(() => {
-        return filters.active(todos).length;
-      });
-      const allDone = computed({
-        get: function() {
-          return remaining.length === 0;
-        },
-        set: function(value) {
-          todos.forEach(function(todo) {
-            todo.completed = value;
-          });
-        }
-      });
-      function removeTodo(todo) {
-        var index = todos.indexOf(todo);
-        todos.splice(index, 1);
-      }
-
-      function handleEditTodo(todo) {
-          debugger
-        beforeEditCache = todo.title;
-        state.editedTodo = todo;
-      }
-
-      function doneEdit(todo) {
-        if (!state.editedTodo) {
-          return;
-        }
-        state.editedTodo = null;
-        todo.title = todo.title.trim();
-        if (!todo.title) {
-          removeTodo(todo);
-        }
-      }
-
-      function cancelEdit(todo) {
-        state.editedTodo = null;
-        todo.title = beforeEditCache;
-      }
-
-      function removeCompleted() {
-        todos = filters.active(todos);
-      }
-
-  
       return {
-        todos,
         state,
-        filteredTodos,
-        remaining,
-        allDone,
+        ...useCompouteds(),
         removeTodo,
         handleEditTodo,
         cancelEdit,

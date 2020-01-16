@@ -6,16 +6,13 @@
 </template>
 <script>
 import { ref, } from "vue";
-import { useAddTodo } from "./todo";
+import { useState, addTodo } from "./todo";
 export default {
     setup(){
-        const newTodo = ref('')
+        const {newTodo} = useState()
         return {
             newTodo,
-            addTodo(){
-                useAddTodo(newTodo.value)
-                newTodo.value =''
-            }
+            addTodo
         }
     }
 }

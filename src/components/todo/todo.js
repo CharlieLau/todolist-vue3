@@ -1,16 +1,23 @@
 import {
     reactive,
     watch,
-    effect
+    effect,
+    computed
 } from 'vue'
 import todoStorage from './store'
 
 
+let beforeEditCache
+
+
 const state = reactive({
-    todos: []
+    todos: [],
+    visibility: 'all',
+    editedTodo: null,
+    newTodo: ''
 })
 
-export const filters = {
+const filters = {
     all: function (todos) {
         return todos;
     },
@@ -27,7 +34,7 @@ export const filters = {
 }
 
 
-export function onTodosMounted(){
+export function onTodosMounted() {
     watch(
         effect(() => {
             todoStorage.save(state.todos)
@@ -35,12 +42,12 @@ export function onTodosMounted(){
     )
 }
 
-export function useTodos() {
+export function useState() {
     state.todos = todoStorage.fetch()
     return state
 }
 
-export function useAddTodo(todo) {
+export function addTodo(todo) {
     const value = todo.trim()
     if (!value) {
         return
@@ -50,7 +57,77 @@ export function useAddTodo(todo) {
         title: value,
         completed: false
     })
+    state.newTodo = ''
 }
 
 
+export function removeTodo(todo) {
+    let index = state.todos.indexOf(todo);
+    state.todos.splice(index, 1);
+}
+
+export function handleEditTodo(todo) {
+    beforeEditCache = todo.title;
+    state.editedTodo = todo;
+}
+
+export function doneEdit(todo) {
+    if (!state.editedTodo) {
+        return;
+    }
+    state.editedTodo = null;
+    todo.title = todo.title.trim();
+    if (!todo.title) {
+        removeTodo(todo);
+    }
+}
+
+export function cancelEdit(todo) {
+    state.editedTodo = null;
+    todo.title = beforeEditCache;
+}
+
+export function removeCompleted() {
+    state.todos = filters.active(state.todos);
+}
+
+export function switchVisiBility(visibility){
+    state.visibility=visibility
+  }
+
+
+
+function pluralize(word, count) {
+    return word + (count === 1 ? '' : 's');
+}
+
+
+export function useCompouteds() {
+    const filteredTodos = computed(() => {
+        return filters[state.visibility](state.todos);
+    });
+    const remaining = computed(() => {
+        return filters.active(state.todos).length;
+    });
+    const allDone = computed({
+        get: function () {
+            return remaining.length === 0;
+        },
+        set: function (value) {
+            state.todos.forEach(function (todo) {
+                todo.completed = value;
+            });
+        }
+    });
+    const remainingText = computed(() => {
+        return ` ${pluralize(remaining.value)} left`
+    })
+
+    return {
+        filteredTodos,
+        remaining,
+        allDone,
+        remainingText
+    }
+}
 
