@@ -4,9 +4,6 @@
 <script>
     import TodoComponent from './components/todo'
     export default {
-        setup(){
-            
-        },
         components:{
             TodoComponent
         }

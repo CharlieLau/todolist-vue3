@@ -15,7 +15,7 @@
     </section>
 </template>
 <script>
-  import {  onTodosMounted, useCompouteds, useState,handleEditTodo,removeTodo,cancelEdit,doneEdit } from "./todo";
+  import { onTodosMounted, useCompouteds, useState,handleEditTodo,removeTodo,cancelEdit,doneEdit } from "./todo";
   import { onMounted, computed, reactive } from "vue";
   export default {
     setup() {

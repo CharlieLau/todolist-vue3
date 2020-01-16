@@ -93,7 +93,7 @@ export function removeCompleted() {
 
 export function switchVisiBility(visibility){
     state.visibility=visibility
-  }
+}
 
 
 

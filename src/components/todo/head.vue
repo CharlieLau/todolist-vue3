@@ -5,7 +5,6 @@
     </header>
 </template>
 <script>
-import { ref, } from "vue";
 import { useState, addTodo } from "./todo";
 export default {
     setup(){

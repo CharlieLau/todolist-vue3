@@ -15,8 +15,7 @@
     </footer>
 </template>
 <script>
-import { computed  } from "vue";
-import { useState,useCompouteds, removeCompleted , switchVisiBility} from "./todo";
+import { useState,useCompouteds, removeCompleted , switchVisiBility } from "./todo";
 export default {
     setup(){
         const state = useState()
