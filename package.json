@@ -18,6 +18,8 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "todomvc-app-css": "^2.3.0",
+    "todomvc-common": "^1.0.5",
     "vue": "3.0.0-alpha.1"
   }
 }

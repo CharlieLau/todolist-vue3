@@ -3635,6 +3635,16 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+todomvc-app-css@^2.3.0:
+  version "2.3.0"
+  resolved "http://r.npm.sankuai.com/todomvc-app-css/download/todomvc-app-css-2.3.0.tgz#cc27f1686ab4c418eef4e790289cc124baca2546"
+  integrity sha1-zCfxaGq0xBju9OeQKJzBJLrKJUY=
+
+todomvc-common@^1.0.5:
+  version "1.0.5"
+  resolved "http://r.npm.sankuai.com/todomvc-common/download/todomvc-common-1.0.5.tgz#8c3e799ac9f1fc1573e0c204f984510826914730"
+  integrity sha1-jD55msnx/BVz4MIE+YRRCCaRRzA=
+
 toidentifier@1.0.0:
   version "1.0.0"
   resolved "http://r.npm.sankuai.com/toidentifier/download/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"

@@ -1,23 +1,26 @@
 const path = require('path')
-const { VueLoaderPlugin } = require('vue-loader')
+const {
+    VueLoaderPlugin
+} = require('vue-loader')
 
 module.exports = {
     entry: './src/index.js',
     module: {
-        rules: [ {
+        rules: [{
             test: /\.vue$/,
             use: 'vue-loader'
-          }]
+        }]
     },
+    devtool: 'source-map',
     resolve: {
-        extensions: ['.vue','.js'],
+        extensions: ['.vue', '.js'],
         alias: {
             'vue': '@vue/runtime-dom'
         }
     },
     output: {
         // filename: '[name].[hash].js',
-        filename:'bundle.js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
     },
     devServer: {
@@ -29,6 +32,6 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin()
-      ],
+    ],
 
 }
